@@ -39,6 +39,13 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: 'Check Secrets'
+      run: |
+        echo "Checking if secrets are set..."
+        [[ -n "${{ secrets.AZURE_CLIENT_ID }}" ]] && echo "AZURE_CLIENT_ID is present" || echo "AZURE_CLIENT_ID is MISSING"
+        [[ -n "${{ secrets.AZURE_TENANT_ID }}" ]] && echo "AZURE_TENANT_ID is present" || echo "AZURE_TENANT_ID is MISSING"
+        [[ -n "${{ secrets.AZURE_SUBSCRIPTION_ID }}" ]] && echo "AZURE_SUBSCRIPTION_ID is present" || echo "AZURE_SUBSCRIPTION_ID is MISSING"
+
     - name: 'Az Login'
       uses: azure/login@v2
       with:
@@ -90,6 +97,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    - name: 'Check Secrets'
+      run: |
+        echo "Checking if secrets are set..."
+        [[ -n "${{ secrets.AZURE_CLIENT_ID }}" ]] && echo "AZURE_CLIENT_ID is present" || echo "AZURE_CLIENT_ID is MISSING"
+        [[ -n "${{ secrets.AZURE_TENANT_ID }}" ]] && echo "AZURE_TENANT_ID is present" || echo "AZURE_TENANT_ID is MISSING"
+        [[ -n "${{ secrets.AZURE_SUBSCRIPTION_ID }}" ]] && echo "AZURE_SUBSCRIPTION_ID is present" || echo "AZURE_SUBSCRIPTION_ID is MISSING"
 
     - name: 'Az Login'
       uses: azure/login@v2
