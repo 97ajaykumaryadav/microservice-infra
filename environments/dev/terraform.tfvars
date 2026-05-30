@@ -24,6 +24,9 @@ key_vaults = {
   }
 }
 
+# Add your Object ID here to manage secrets via Portal
+admin_object_ids = ["2e2b2910-5e74-4c98-9bba-ddf4e64d7209"] 
+
 mysql_servers = {
   "mysql-micro-dev-cin" = {
     resource_group_name = "rg-micro-dev-cin"

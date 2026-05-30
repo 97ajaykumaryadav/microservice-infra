@@ -33,3 +33,33 @@ resource "azurerm_key_vault_access_policy" "deployer" {
     "Recover"
   ]
 }
+
+locals {
+  admin_policies = flatten([
+    for kv_key, kv in azurerm_key_vault.kv : [
+      for obj_id in var.admin_object_ids : {
+        kv_key  = kv_key
+        kv_id   = kv.id
+        obj_id  = obj_id
+      }
+    ]
+  ])
+}
+
+resource "azurerm_key_vault_access_policy" "admins" {
+  for_each = { for ap in local.admin_policies : "${ap.kv_key}.${ap.obj_id}" => ap }
+
+  key_vault_id = each.value.kv_id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = each.value.obj_id
+
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete",
+    "Purge",
+    "Recover",
+    "Restore"
+  ]
+}

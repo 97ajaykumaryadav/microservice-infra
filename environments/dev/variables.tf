@@ -41,6 +41,11 @@ variable "key_vaults" {
   }))
 }
 
+variable "admin_object_ids" {
+  type    = list(string)
+  default = []
+}
+
 variable "mysql_servers" {
   type = map(object({
     resource_group_name = string

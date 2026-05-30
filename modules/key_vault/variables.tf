@@ -13,3 +13,9 @@ variable "key_vaults" {
     tags                            = optional(map(string), {})
   }))
 }
+
+variable "admin_object_ids" {
+  description = "List of object IDs for users who should have admin access to the Key Vault"
+  type        = list(string)
+  default     = []
+}

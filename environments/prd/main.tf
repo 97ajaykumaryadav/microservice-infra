@@ -31,9 +31,10 @@ module "resource_groups" {
 }
 
 module "key_vault" {
-  source     = "../../modules/key_vault"
-  key_vaults = var.key_vaults
-  depends_on = [module.resource_groups]
+  source           = "../../modules/key_vault"
+  key_vaults       = var.key_vaults
+  admin_object_ids = var.admin_object_ids
+  depends_on       = [module.resource_groups]
 }
 
 module "mysql" {
