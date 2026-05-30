@@ -13,8 +13,3 @@ variable "key_vaults" {
     tags                            = optional(map(string), {})
   }))
 }
-
-variable "tenant_id" {
-  description = "The Azure Tenant ID"
-  type        = string
-}

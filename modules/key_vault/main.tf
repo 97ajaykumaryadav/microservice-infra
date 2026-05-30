@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_key_vault" "kv" {
   for_each = var.key_vaults
 
@@ -7,7 +9,7 @@ resource "azurerm_key_vault" "kv" {
   enabled_for_deployment      = each.value.enabled_for_deployment
   enabled_for_disk_encryption = each.value.enabled_for_disk_encryption
   enabled_for_template_deployment = each.value.enabled_for_template_deployment
-  tenant_id                   = var.tenant_id
+  tenant_id                   = data.azurerm_client_config.current.tenant_id
   sku_name                    = each.value.sku_name
   soft_delete_retention_days  = each.value.soft_delete_retention_days
   purge_protection_enabled     = each.value.purge_protection_enabled

@@ -17,9 +17,6 @@ container_registries = {
   }
 }
 
-# Using your actual Tenant ID: 2244a2ad-f581-433a-b651-84f983356e6a
-tenant_id = "2244a2ad-f581-433a-b651-84f983356e6a" 
-
 key_vaults = {
   "kv-micro-dev-cin" = {
     resource_group_name = "rg-micro-dev-cin"

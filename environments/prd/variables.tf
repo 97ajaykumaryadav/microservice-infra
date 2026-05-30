@@ -33,10 +33,6 @@ variable "container_registries" {
   }))
 }
 
-variable "tenant_id" {
-  type = string
-}
-
 variable "key_vaults" {
   type = map(object({
     resource_group_name = string

@@ -26,8 +26,6 @@ container_registries = {
   }
 }
 
-tenant_id = "2244a2ad-f581-433a-b651-84f983356e6a"
-
 key_vaults = {
   "kv-micro-prd-cin" = {
     resource_group_name = "rg-micro-prd-cin"
