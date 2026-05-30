@@ -8,6 +8,7 @@ variable "kubernetes_clusters" {
     sku_tier                        = optional(string, "Free")
     api_server_authorized_ip_ranges = optional(list(string), [])
     local_account_disabled          = optional(bool, false)
+    role_based_access_control_enabled = optional(bool, true)
     tags                            = optional(map(string), {})
 
     default_node_pool = object({
