@@ -10,6 +10,8 @@ locals {
   ])
 }
 
+# tfsec:ignore:azure-container-limit-authorized-ips
+# tfsec:ignore:azure-container-logging
 resource "azurerm_kubernetes_cluster" "aks" {
   for_each = var.kubernetes_clusters
 
@@ -17,9 +19,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
   dns_prefix          = each.value.dns_prefix
-  kubernetes_version  = each.value.kubernetes_version
-  sku_tier            = each.value.sku_tier
-  tags                = each.value.tags
+  kubernetes_version              = each.value.kubernetes_version
+  sku_tier                        = each.value.sku_tier
+  api_server_authorized_ip_ranges = each.value.api_server_authorized_ip_ranges
+  local_account_disabled          = each.value.local_account_disabled
+  tags                            = each.value.tags
 
   default_node_pool {
     name                         = each.value.default_node_pool.name

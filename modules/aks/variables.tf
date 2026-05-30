@@ -4,9 +4,11 @@ variable "kubernetes_clusters" {
     resource_group_name = string
     location            = string
     dns_prefix          = string
-    kubernetes_version  = optional(string)
-    sku_tier            = optional(string, "Free")
-    tags                = optional(map(string), {})
+    kubernetes_version              = optional(string)
+    sku_tier                        = optional(string, "Free")
+    api_server_authorized_ip_ranges = optional(list(string), [])
+    local_account_disabled          = optional(bool, false)
+    tags                            = optional(map(string), {})
 
     default_node_pool = object({
       name                         = string
