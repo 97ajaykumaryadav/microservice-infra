@@ -1,6 +1,6 @@
 resource_groups = {
-  "rg-micro-dev-eus" = {
-    location = "East US"
+  "rg-micro-dev-cin" = {
+    location = "Central India"
     tags = {
       environment = "dev"
       project     = "microservices"
@@ -10,8 +10,8 @@ resource_groups = {
 
 container_registries = {
   "acrmicrodev001" = {
-    resource_group_name = "rg-micro-dev-eus"
-    location            = "East US"
+    resource_group_name = "rg-micro-dev-cin"
+    location            = "Central India"
     sku                 = "Standard"
     admin_enabled       = true
   }
@@ -19,8 +19,8 @@ container_registries = {
 
 kubernetes_clusters = {
   "aks-dev-001" = {
-    resource_group_name = "rg-micro-dev-eus"
-    location            = "East US"
+    resource_group_name = "rg-micro-dev-cin"
+    location            = "Central India"
     dns_prefix          = "aksdev"
     sku_tier            = "Free"
 

@@ -1,6 +1,6 @@
 resource_groups = {
-  "rg-micro-prd-eus" = {
-    location = "East US"
+  "rg-micro-prd-cin" = {
+    location = "Central India"
     tags = {
       environment = "prd"
       project     = "microservices"
@@ -10,12 +10,12 @@ resource_groups = {
 
 container_registries = {
   "acrmicroprd001" = {
-    resource_group_name = "rg-micro-prd-eus"
-    location            = "East US"
+    resource_group_name = "rg-micro-prd-cin"
+    location            = "Central India"
     sku                 = "Premium"
     admin_enabled       = false
     georeplications = [
-      { location = "West US" }
+      { location = "South India" }
     ]
     network_rule_set = {
       default_action = "Deny"
@@ -28,8 +28,8 @@ container_registries = {
 
 kubernetes_clusters = {
   "aks-prd-001" = {
-    resource_group_name = "rg-micro-prd-eus"
-    location            = "East US"
+    resource_group_name = "rg-micro-prd-cin"
+    location            = "Central India"
     dns_prefix          = "aksprod"
     sku_tier            = "Paid"
 
