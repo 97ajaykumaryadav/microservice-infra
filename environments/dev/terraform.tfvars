@@ -17,6 +17,28 @@ container_registries = {
   }
 }
 
+tenant_id = "e184cbb2-94b7-4837-9a26-366e3fafcd17" # Using your subscription's tenant hint
+
+key_vaults = {
+  "kv-micro-dev-cin" = {
+    resource_group_name = "rg-micro-dev-cin"
+    location            = "Central India"
+  }
+}
+
+mysql_servers = {
+  "mysql-micro-dev-cin" = {
+    resource_group_name = "rg-micro-dev-cin"
+    location            = "Central India"
+    administrator_login = "mysqladmin"
+    key_vault_id        = "/subscriptions/e184cbb2-94b7-4837-9a26-366e3fafcd17/resourceGroups/rg-micro-dev-cin/providers/Microsoft.KeyVault/vaults/kv-micro-dev-cin"
+    secret_name         = "mysql-admin-password"
+    databases = {
+      "app_db" = {}
+    }
+  }
+}
+
 kubernetes_clusters = {
   "aks-dev-001" = {
     resource_group_name = "rg-micro-dev-cin"

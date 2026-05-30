@@ -33,12 +33,41 @@ variable "container_registries" {
   }))
 }
 
-variable "kubernetes_clusters" {
+variable "tenant_id" {
+  type = string
+}
+
+variable "key_vaults" {
   type = map(object({
     resource_group_name = string
     location            = string
-    dns_prefix          = string
-    sku_tier            = optional(string, "Free")
+    tags                = optional(map(string), {})
+  }))
+}
+
+variable "mysql_servers" {
+  type = map(object({
+    resource_group_name = string
+    location            = string
+    administrator_login = string
+    key_vault_id        = string
+    secret_name         = string
+    databases           = optional(map(object({
+      charset   = optional(string, "utf8mb3")
+      collation = optional(string, "utf8mb3_general_ci")
+    })), {})
+  }))
+}
+
+variable "kubernetes_clusters" {
+  type = map(object({
+    resource_group_name             = string
+    location                        = string
+    dns_prefix                      = string
+    sku_tier                        = optional(string, "Free")
+    api_server_authorized_ip_ranges = optional(list(string), [])
+    local_account_disabled          = optional(bool, false)
+    role_based_access_control_enabled = optional(bool, true)
     default_node_pool = object({
       name                = string
       node_count          = optional(number, 1)

@@ -26,6 +26,28 @@ container_registries = {
   }
 }
 
+tenant_id = "e184cbb2-94b7-4837-9a26-366e3fafcd17"
+
+key_vaults = {
+  "kv-micro-prd-cin" = {
+    resource_group_name = "rg-micro-prd-cin"
+    location            = "Central India"
+  }
+}
+
+mysql_servers = {
+  "mysql-micro-prd-cin" = {
+    resource_group_name = "rg-micro-prd-cin"
+    location            = "Central India"
+    administrator_login = "mysqladmin"
+    key_vault_id        = "/subscriptions/e184cbb2-94b7-4837-9a26-366e3fafcd17/resourceGroups/rg-micro-prd-cin/providers/Microsoft.KeyVault/vaults/kv-micro-prd-cin"
+    secret_name         = "mysql-admin-password"
+    databases = {
+      "prod_db" = {}
+    }
+  }
+}
+
 kubernetes_clusters = {
   "aks-prd-001" = {
     resource_group_name = "rg-micro-prd-cin"

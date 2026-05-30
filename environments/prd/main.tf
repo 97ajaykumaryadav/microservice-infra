@@ -25,6 +25,19 @@ module "resource_groups" {
   resource_groups = var.resource_groups
 }
 
+module "key_vault" {
+  source     = "../../modules/key_vault"
+  key_vaults = var.key_vaults
+  tenant_id  = var.tenant_id
+  depends_on = [module.resource_groups]
+}
+
+module "mysql" {
+  source        = "../../modules/mysql"
+  mysql_servers = var.mysql_servers
+  depends_on    = [module.resource_groups, module.key_vault]
+}
+
 module "acr" {
   source               = "../../modules/acr"
   container_registries = var.container_registries
