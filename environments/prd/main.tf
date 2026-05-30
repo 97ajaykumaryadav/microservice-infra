@@ -10,6 +10,7 @@ terraform {
 
 provider "azurerm" {
   features {}
+  use_oidc = true
 }
 
 module "resource_groups" {
