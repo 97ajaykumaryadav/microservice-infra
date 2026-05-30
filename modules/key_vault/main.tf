@@ -16,3 +16,20 @@ resource "azurerm_key_vault" "kv" {
   public_network_access_enabled = each.value.public_network_access_enabled
   tags                        = each.value.tags
 }
+
+resource "azurerm_key_vault_access_policy" "deployer" {
+  for_each = azurerm_key_vault.kv
+
+  key_vault_id = each.value.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete",
+    "Purge",
+    "Recover"
+  ]
+}
