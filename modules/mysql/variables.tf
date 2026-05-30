@@ -12,7 +12,6 @@ variable "mysql_servers" {
     storage_iops        = optional(number, 360)
     backup_retention_days = optional(number, 7)
     geo_redundant_backup_enabled = optional(bool, false)
-    public_network_access_enabled = optional(bool, true)
     tags                = optional(map(string), {})
 
     databases = optional(map(object({

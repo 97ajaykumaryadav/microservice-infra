@@ -22,7 +22,6 @@ resource "azurerm_mysql_flexible_server" "mysql" {
 
   backup_retention_days        = each.value.backup_retention_days
   geo_redundant_backup_enabled = each.value.geo_redundant_backup_enabled
-  public_network_access_enabled = each.value.public_network_access_enabled
   tags                         = each.value.tags
 }
 
