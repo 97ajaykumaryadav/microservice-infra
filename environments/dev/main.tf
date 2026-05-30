@@ -6,6 +6,13 @@ terraform {
       version = "~> 3.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "stmicroinfraeusstate" # Change this to your unique storage account name
+    container_name       = "tfstate"
+    key                  = "dev.terraform.tfstate"
+    use_oidc             = true
+  }
 }
 
 provider "azurerm" {
