@@ -27,7 +27,7 @@ kubernetes_clusters = {
     default_node_pool = {
       name                = "devpool"
       node_count          = 1
-      vm_size             = "Standard_DS2_v2"
+      vm_size             = "Standard_DC2as_v5"
       enable_auto_scaling = false
     }
   }
