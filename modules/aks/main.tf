@@ -23,6 +23,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   sku_tier                        = each.value.sku_tier
   local_account_disabled          = each.value.local_account_disabled
   role_based_access_control_enabled = each.value.role_based_access_control_enabled
+  oidc_issuer_enabled             = each.value.oidc_issuer_enabled
+  workload_identity_enabled       = each.value.workload_identity_enabled
   tags                            = each.value.tags
 
   api_server_access_profile {

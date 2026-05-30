@@ -17,7 +17,8 @@ container_registries = {
   }
 }
 
-tenant_id = "e184cbb2-94b7-4837-9a26-366e3fafcd17" # Using your subscription's tenant hint
+# Using your actual Tenant ID: 2244a2ad-f581-433a-b651-84f983356e6a
+tenant_id = "2244a2ad-f581-433a-b651-84f983356e6a" 
 
 key_vaults = {
   "kv-micro-dev-cin" = {
