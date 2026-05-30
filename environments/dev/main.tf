@@ -39,12 +39,12 @@ module "key_vault" {
   depends_on       = [module.resource_groups]
 }
 
-# MySQL Module
-module "mysql" {
-  source        = "../../modules/mysql"
-  mysql_servers = var.mysql_servers
-  depends_on    = [module.resource_groups, module.key_vault]
-}
+# MySQL Module (Temporarily disabled to allow Key Vault Access Policy to deploy)
+# module "mysql" {
+#   source        = "../../modules/mysql"
+#   mysql_servers = var.mysql_servers
+#   depends_on    = [module.resource_groups, module.key_vault]
+# }
 
 # ACR Module
 module "acr" {
