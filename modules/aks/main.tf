@@ -21,10 +21,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = each.value.dns_prefix
   kubernetes_version              = each.value.kubernetes_version
   sku_tier                        = each.value.sku_tier
-  api_server_authorized_ip_ranges = each.value.api_server_authorized_ip_ranges
   local_account_disabled          = each.value.local_account_disabled
   role_based_access_control_enabled = each.value.role_based_access_control_enabled
   tags                            = each.value.tags
+
+  api_server_access_profile {
+    authorized_ip_ranges = each.value.api_server_authorized_ip_ranges
+  }
 
   default_node_pool {
     name                         = each.value.default_node_pool.name
