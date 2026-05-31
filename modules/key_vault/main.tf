@@ -1,5 +1,10 @@
 data "azurerm_client_config" "current" {}
 
+locals {
+  # Combine client ID and admin IDs, then remove duplicates
+  all_admin_ids = distinct(concat([data.azurerm_client_config.current.object_id], var.admin_object_ids))
+}
+
 resource "azurerm_key_vault" "kv" {
   for_each = var.key_vaults
 
@@ -16,38 +21,23 @@ resource "azurerm_key_vault" "kv" {
   public_network_access_enabled = each.value.public_network_access_enabled
   tags                        = each.value.tags
 
+  # Using inline access_policy blocks to manage all policies together
+  # This avoids "already exists" errors by managing the entire policy set
+  dynamic "access_policy" {
+    for_each = local.all_admin_ids
+    content {
+      tenant_id = data.azurerm_client_config.current.tenant_id
+      object_id = access_policy.value
+
+      key_permissions         = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+      secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
+      certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       enable_rbac_authorization,
     ]
   }
-}
-
-resource "azurerm_key_vault_access_policy" "client" {
-  for_each = var.key_vaults
-
-  key_vault_id = azurerm_key_vault.kv[each.key].id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_client_config.current.object_id
-
-  key_permissions         = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
-  secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
-  certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
-}
-
-resource "azurerm_key_vault_access_policy" "admins" {
-  for_each = {
-    for pair in setproduct(keys(var.key_vaults), var.admin_object_ids) : "${pair[0]}-${pair[1]}" => {
-      kv_key    = pair[0]
-      object_id = pair[1]
-    }
-  }
-
-  key_vault_id = azurerm_key_vault.kv[each.value.kv_key].id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = each.value.object_id
-
-  key_permissions         = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
-  secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
-  certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
 }
