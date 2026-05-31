@@ -14,8 +14,40 @@ resource "azurerm_key_vault" "kv" {
   soft_delete_retention_days  = each.value.soft_delete_retention_days
   purge_protection_enabled     = each.value.purge_protection_enabled
   public_network_access_enabled = each.value.public_network_access_enabled
-  enable_rbac_authorization   = true # Enable modern RBAC model
   tags                        = each.value.tags
+
+  lifecycle {
+    ignore_changes = [
+      enable_rbac_authorization,
+    ]
+  }
 }
 
-# No longer need azurerm_key_vault_access_policy when using enable_rbac_authorization = true
+resource "azurerm_key_vault_access_policy" "client" {
+  for_each = var.key_vaults
+
+  key_vault_id = azurerm_key_vault.kv[each.key].id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = data.azurerm_client_config.current.object_id
+
+  key_permissions         = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+  secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
+  certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+}
+
+resource "azurerm_key_vault_access_policy" "admins" {
+  for_each = {
+    for pair in setproduct(keys(var.key_vaults), var.admin_object_ids) : "${pair[0]}-${pair[1]}" => {
+      kv_key    = pair[0]
+      object_id = pair[1]
+    }
+  }
+
+  key_vault_id = azurerm_key_vault.kv[each.value.kv_key].id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = each.value.object_id
+
+  key_permissions         = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+  secret_permissions      = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
+  certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+}
