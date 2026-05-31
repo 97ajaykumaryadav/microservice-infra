@@ -28,9 +28,9 @@ key_vaults = {
 admin_object_ids = ["2e2b2910-5e74-4c98-9bba-ddf4e64d7209"] 
 
 mysql_servers = {
-  "mysql-micro-dev-eus" = { # Renamed to avoid conflict with "ghost" resource in Central India
+  "mysql-micro-dev-wus2" = { # Moved to West US 2 as East US also has capacity/access limits for this sub
     resource_group_name = "rg-micro-dev-cin"
-    location            = "East US"
+    location            = "West US 2" 
     sku_name            = "B_Standard_B1ms"
     administrator_login = "mysqladmin"
     key_vault_id        = "/subscriptions/e184cbb2-94b7-4837-9a26-366e3fafcd17/resourceGroups/rg-micro-dev-cin/providers/Microsoft.KeyVault/vaults/kv-micro-dev-cin"
